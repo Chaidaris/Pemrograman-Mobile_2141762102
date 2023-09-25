@@ -5,7 +5,6 @@ void main() {
 }
 
 class KonversiSuhu extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,6 +27,7 @@ class _KonversiSuhuPageState extends State<KonversiSuhuPage> {
   String inputAltenatif = 'Celcius';
   String outputSuhu = 'Kelvin';
   double hasilKonversi = 0.0;
+  List<String> history = [];
 
   final List<String> units = ['Celcius', 'Kelvin', 'Reamur'];
 
@@ -57,8 +57,6 @@ class _KonversiSuhuPageState extends State<KonversiSuhuPage> {
               onChanged: (newValue) {
                 setState(() {
                   outputSuhu = newValue!;
-                  // Panggil fungsi konversi otomatis di sini
-                  hasilkonversi();
                 });
               },
               items: units.map<DropdownMenuItem<String>>((String value) {
@@ -75,10 +73,21 @@ class _KonversiSuhuPageState extends State<KonversiSuhuPage> {
             Container(
               child: ElevatedButton(
                 onPressed: () {
-                  // Panggil fungsi konversi saat tombol ditekan
                   hasilkonversi();
                 },
                 child: Text('Konversi'),
+              ),
+            ),
+            SizedBox(height: 20.0),
+            Text('Riwayat Konversi'),
+            Expanded(
+              child: ListView.builder(
+                itemCount: history.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    title: Text(history[index]),
+                  );
+                },
               ),
             ),
           ],
@@ -88,7 +97,13 @@ class _KonversiSuhuPageState extends State<KonversiSuhuPage> {
   }
 
   void hasilkonversi() {
-    hasilKonversi = perhitungansuhu(inputSuhu, inputAltenatif, outputSuhu);
+    double hasil = perhitungansuhu(inputSuhu, inputAltenatif, outputSuhu);
+    String historyItem =
+        '$inputSuhu $inputAltenatif ke $outputSuhu = $hasil $outputSuhu';
+    setState(() {
+      hasilKonversi = hasil;
+      history.insert(0, historyItem);
+    });
   }
 
   double perhitungansuhu(double suhu, String inputUnit, String outputUnit) {
@@ -97,7 +112,7 @@ class _KonversiSuhuPageState extends State<KonversiSuhuPage> {
     } else if (inputUnit == 'Celcius' && outputUnit == 'Reamur') {
       return suhu * 4 / 5;
     } else {
-      return suhu; // Konversi antara unit yang sama, hasil tetap sama
+      return suhu;
     }
   }
 }
