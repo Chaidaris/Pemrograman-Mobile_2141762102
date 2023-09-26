@@ -13,9 +13,11 @@ class ItemPage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(itemArgs.name),
-            Text(itemArgs.nameProduct),
-            Text(itemArgs.price.toString()),
+            Text(itemArgs.name +
+                ' Brand ' +
+                itemArgs.nameProduct +
+                ' with ' +
+                itemArgs.price.toString()),
           ],
         ),
       ),
