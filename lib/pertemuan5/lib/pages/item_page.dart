@@ -7,7 +7,7 @@ class ItemPage extends StatelessWidget {
     final Item itemArgs = ModalRoute.of(context)!.settings.arguments as Item;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Item Page'),
+        title: Text('Detailed Product Page (' + itemArgs.name + ')'),
       ),
       body: Center(
         child: Row(
@@ -16,6 +16,8 @@ class ItemPage extends StatelessWidget {
             Text(itemArgs.name +
                 ' Brand ' +
                 itemArgs.nameProduct +
+                ' Netto ' +
+                itemArgs.netto +
                 ' with ' +
                 itemArgs.price.toString()),
           ],
