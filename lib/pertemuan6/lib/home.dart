@@ -71,31 +71,50 @@ class HomeState extends State<Home> {
   }
 
   ListView createListView() {
+    TextStyle? textStyle = Theme.of(context).textTheme.headline5;
     return ListView.builder(
       itemCount: count,
       itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          title: Text(itemList[index].name),
-          subtitle: Text(itemList[index].price.toString()),
-          onTap: () async {
-            var item = await navigateToEntryForm(context, itemList[index]);
-            if (item != null) {
-              int result = await dbHelper.update(item);
-              if (result > 0) {
-                updateListView();
-              }
-            }
-          },
+        return Card(
+          color: Colors.white,
+          elevation: 2.0,
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: Colors.red,
+              child: Icon(Icons.ad_units),
+            ),
+            title: Text(
+              this.itemList[index].name,
+              style: textStyle,
+            ),
+            subtitle: Text(this.itemList[index].price.toString()),
+            trailing: GestureDetector(
+              child: Icon(Icons.delete),
+              onTap: () async {
+//TODO 3 Panggil Fungsi untuk Delete dari DB berdasarkan Item
+              },
+            ),
+            onTap: () async {
+              var item =
+                  await navigateToEntryForm(context, this.itemList[index]);
+//TODO 4 Panggil Fungsi untuk Edit data
+            },
+          ),
         );
       },
     );
   }
 
-  void updateListView() async {
-    List<Item> items = await dbHelper.getItemList();
-    setState(() {
-      itemList = items;
-      count = items.length;
+  void updateListView() {
+    final Future<Database> dbFuture = dbHelper.initDb();
+    dbFuture.then((database) {
+      Future<List<Item>> itemListFuture = dbHelper.getItemList();
+      itemListFuture.then((itemList) {
+        setState(() {
+          this.itemList = itemList;
+          this.count = itemList.length;
+        });
+      });
     });
   }
 }

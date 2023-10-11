@@ -5,12 +5,15 @@ import 'package:path_provider/path_provider.dart';
 import 'models/item.dart';
 
 class DbHelper {
-  static DbHelper _dbHelper = DbHelper._createObject();
-  static late Database _database;
+  static DbHelper? _dbHelper;
+  static Database? _database;
   DbHelper._createObject();
 
   factory DbHelper() {
-    return _dbHelper;
+    if (_dbHelper == null) {
+      _dbHelper = DbHelper._createObject();
+    }
+    return _dbHelper!;
   }
 
   Future<Database> initDb() async {
@@ -68,7 +71,7 @@ class DbHelper {
     return itemList;
   }
 
-  Future<Database> get database async {
+  Future<Database?> get database async {
     if (_database == null) {
       _database = await initDb();
     }
