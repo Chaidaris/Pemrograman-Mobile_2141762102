@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutterfirebase/sign_in.dart';
-import 'package:flutterfirebase/first_screen.dart';
+import 'sign_in.dart';
+import 'first_screen.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -29,8 +29,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _signInButton() {
-    return OutlineButton(
-      splashColor: Colors.grey,
+    return OutlinedButton(
       onPressed: () {
         signInWithGoogle().then((result) {
           if (result != null) {
@@ -44,9 +43,13 @@ class _LoginPageState extends State<LoginPage> {
           }
         });
       },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-      highlightElevation: 0,
-      borderSide: BorderSide(color: Colors.grey),
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40),
+          ),
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
         child: Row(

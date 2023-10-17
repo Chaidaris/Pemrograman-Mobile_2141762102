@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Souvik Biswas
 import 'package:flutter/material.dart';
-import 'package:flutterfirebase/login_page.dart';
-import 'package:flutterfirebase/sign_in.dart';
+import 'login_page.dart';
+import 'sign_in.dart';
 
 class FirstScreen extends StatelessWidget {
   @override
@@ -12,7 +12,7 @@ class FirstScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [Colors.blue[100], Colors.blue[400]],
+            colors: [Colors.blue[100]!, Colors.blue[400]!],
           ),
         ),
         child: Center(
@@ -60,24 +60,35 @@ class FirstScreen extends StatelessWidget {
               SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
-                  signOutGoogle();
-
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) {
-                    return LoginPage();
-                  }), ModalRoute.withName('/'));
+                  // Tindakan yang diambil saat tombol ditekan
                 },
-                color: Colors.deepPurple,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Sign Out',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.deepPurple),
+                ),
+                child: Ink(
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurple,
+                    borderRadius: BorderRadius.circular(40),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Container(
+                    constraints:
+                        BoxConstraints(maxWidth: 200.0, minHeight: 50.0),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Sign Out',
+                      style: TextStyle(fontSize: 25, color: Colors.white),
+                    ),
                   ),
                 ),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40)),
               )
             ],
           ),
