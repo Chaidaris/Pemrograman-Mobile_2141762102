@@ -1,6 +1,6 @@
-# hello_world
+# Repository Mata Kuliah Pemrograman Mobile 
 
-A new Flutter project.
+Dokumentasi Pemrograman Mobile
 
 ## Getting Started
 
